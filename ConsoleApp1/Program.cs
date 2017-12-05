@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BittrexAPI;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            List<MarketPoint> test = BittrexAPI.APIMethods.GetMarkets();
+
+            foreach(var i in test)
+            {
+                foreach(var o in i)
+                {
+                    Console.WriteLine(o);
+                }
+                
+            }
+            Console.ReadLine();
+        }
+    }
+}
