@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+using BittrexAPI.Structures;
 
 namespace BittrexAPI
 {
@@ -48,9 +49,14 @@ namespace BittrexAPI
 
         }
 
-
-        public static List<object> GetCurrencies()
+        /// <summary>
+        /// Used to get all supported currencies at Bittrex along with other meta data.
+        /// </summary>
+        /// <returns></returns>
+        public static List<MarketCurrency> GetCurrencies()
         {
+            List<MarketCurrency> MarketCurrencyList = new List<MarketCurrency>();
+
             dynamic response = HTTPMethods.HttpGet(Constants.baseUrl + "/public/getcurrencies");
 
             if (response.success == false)
@@ -58,13 +64,23 @@ namespace BittrexAPI
                 throw new Exception("Unable to retrieve data from API");
             }
 
+            foreach(var item in response.result)
+            {
+                MarketCurrency currency = new MarketCurrency(
+                    item.Currency.ToString(),
+                    item.CurrencyLong.ToString(),
+                    float.Parse(item.MinConfirmations),
+                    Convert.ToDouble(item.TxFee),
+                    Convert.ToBoolean(item.IsActive),
+                    item.CoinType.ToString(),
+                    item.BaseAddress.ToString()
+                    );
 
+                MarketCurrencyList.Add(currency);
+            }
 
+            return MarketCurrencyList;          
         }
-
-
-
-
     }
 }
 
