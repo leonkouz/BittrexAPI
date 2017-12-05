@@ -14,7 +14,7 @@ namespace BittrexAPI
         /// <summary>
         /// Used to get the open and available trading markets at Bittrex along with other meta data.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all active markets</returns>
         public static List<Market> GetMarkets()
         {
             List<Market> MarketList = new List<Market>();
@@ -52,7 +52,7 @@ namespace BittrexAPI
         /// <summary>
         /// Used to get all supported currencies at Bittrex along with other meta data.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all supported currencies</returns>
         public static List<MarketCurrency> GetCurrencies()
         {
             List<MarketCurrency> MarketCurrencyList = new List<MarketCurrency>();
@@ -86,6 +86,7 @@ namespace BittrexAPI
         /// Used to get the current tick values for a market.
         /// </summary>
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>The ticker data</returns>
         public static Ticker GetTicker(string market)
         {
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "public/getticker?market=" + market));
@@ -104,8 +105,57 @@ namespace BittrexAPI
             double ask = Convert.ToDouble(response.result.Ask);
             double last = Convert.ToDouble(response.result.Last);
 
-
             return new Ticker(bid, ask, last);
+        }
+
+        /// <summary>
+        /// Used to get the last 24 hour summary of all active exchanges
+        /// </summary>
+        /// <returns>A List of summaries for all markets</returns>
+        public static List<MarketSummary> GetMarketSummaries()
+        {
+            List<MarketSummary> marketSummaryList = new List<MarketSummary>();
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getmarketsummaries"));
+
+            if(response.success == false)
+            {
+                throw new Exception("Unable to retreive data from API");
+            }
+
+            foreach (var item in response.result)
+            {
+                MarketSummary marketSummary = new MarketSummary(
+                    item.MarketName.ToString(),
+                    Convert.ToDouble(item.High),
+                    Convert.ToDouble(item.Low),
+                    Convert.ToDouble(item.Volume),
+                    Convert.ToDouble(item.Last),
+                    Convert.ToDouble(item.BaseVolume),
+                    Convert.ToDateTime(item.TimeStamp),
+                    Convert.ToDouble(item.Bid),
+                    Convert.ToDouble(item.Ask),
+                    float.Parse(item.OpenBuyOrders),
+                    float.Parse(item.OpenSellOrders),
+                    Convert.ToDouble(item.Double),
+                    Convert.ToDateTime(item.Created),
+                    item.DisplayMarketName.ToString()
+                    );
+
+                marketSummaryList.Add(marketSummary);
+            }
+
+            return marketSummaryList;
+        }
+
+        /// <summary>
+        /// Used to get the last 24 hour summary of specified exchange
+        /// </summary>
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>The market summary for the specified market</returns>
+        public static MarketSummary GetMarketSummary(string market)
+        {
+
         }
 
 
