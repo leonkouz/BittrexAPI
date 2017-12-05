@@ -20,7 +20,6 @@ namespace ConsoleApp1
                 {
                     Console.WriteLine(o);
                 }
-                
             }
             Console.ReadLine();
         }
