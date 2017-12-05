@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BittrexAPI.Structures
 {
-    class MarketSummary
+    public class MarketSummary
     {
         private List<object> _marketSummaryList = new List<object>();
 

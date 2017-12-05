@@ -156,6 +156,38 @@ namespace BittrexAPI
         public static MarketSummary GetMarketSummary(string market)
         {
 
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getmarketsummary?market=" + market));
+
+            if (response.success == false)
+            {
+                throw new Exception("Unable to retreive data from API");
+            }
+
+            if (response.message == "INVALID_MARKET")
+            {
+                throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
+            }
+
+            var item = response.result;
+
+            MarketSummary marketSummary = new MarketSummary(
+                    item.MarketName.ToString(),
+                    Convert.ToDouble(item.High),
+                    Convert.ToDouble(item.Low),
+                    Convert.ToDouble(item.Volume),
+                    Convert.ToDouble(item.Last),
+                    Convert.ToDouble(item.BaseVolume),
+                    Convert.ToDateTime(item.TimeStamp),
+                    Convert.ToDouble(item.Bid),
+                    Convert.ToDouble(item.Ask),
+                    float.Parse(item.OpenBuyOrders),
+                    float.Parse(item.OpenSellOrders),
+                    Convert.ToDouble(item.Double),
+                    Convert.ToDateTime(item.Created),
+                    item.DisplayMarketName.ToString()
+                    );
+
+            return marketSummary;
         }
 
 
