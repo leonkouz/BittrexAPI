@@ -57,7 +57,7 @@ namespace BittrexAPI
         {
             List<MarketCurrency> MarketCurrencyList = new List<MarketCurrency>();
 
-            dynamic response = HTTPMethods.HttpGet(Constants.baseUrl + "/public/getcurrencies");
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getcurrencies"));
 
             if (response.success == false)
             {
@@ -69,7 +69,7 @@ namespace BittrexAPI
                 MarketCurrency currency = new MarketCurrency(
                     item.Currency.ToString(),
                     item.CurrencyLong.ToString(),
-                    float.Parse(item.MinConfirmations),
+                    item.MinConfirmation.ToString(),
                     Convert.ToDouble(item.TxFee),
                     Convert.ToBoolean(item.IsActive),
                     item.CoinType.ToString(),

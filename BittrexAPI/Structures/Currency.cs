@@ -22,17 +22,17 @@ namespace BittrexAPI.Structures
 
         public string Currency { get; private set; }
         public string CurrencyLong { get; private set; }
-        public float MinConfirmations { get; private set; }
+        public int MinConfirmations { get; private set; }
         public double TxFee { get; private set; }
         public bool IsActive { get; private set; }
         public string CoinType { get; private set; }
         public string BaseAddress { get; private set; }
 
-        public MarketCurrency(string currency, string currencyLong, float minConfirmations, double txFee, bool isActive, string coinType, string baseAddress)
+        public MarketCurrency(string currency, string currencyLong, string minConfirmations, double txFee, bool isActive, string coinType, string baseAddress)
         {
             Currency = currency;
             CurrencyLong = currencyLong;
-            MinConfirmations = minConfirmations;
+            MinConfirmations = Convert.ToInt32(minConfirmations);
             TxFee = txFee;
             IsActive = isActive;
             CoinType = coinType;
