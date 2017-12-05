@@ -22,9 +22,6 @@ namespace ConsoleApp1
             Ticker tick = BittrexAPI.APIMethods.GetTicker("BTC-LTC");
 
 
-
-
-
         }
     }
 }
