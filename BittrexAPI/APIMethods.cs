@@ -14,9 +14,9 @@ namespace BittrexAPI
         /// Used to get the open and available trading markets at Bittrex along with other meta data.
         /// </summary>
         /// <returns></returns>
-        public static List<MarketPoint> GetMarkets()
+        public static List<Market> GetMarkets()
         {
-            List<MarketPoint> marketPointList = new List<MarketPoint>();
+            List<Market> MarketList = new List<Market>();
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getmarkets"));
 
@@ -27,7 +27,7 @@ namespace BittrexAPI
 
             foreach (var item in response.result)
             {
-                MarketPoint point = new MarketPoint(
+                Market point = new Market(
                 item.MarketCurrency.ToString(),
                 item.BaseCurrency.ToString(),
                 item.MarketCurrencyLong.ToString(),
@@ -41,10 +41,10 @@ namespace BittrexAPI
                 item.LogoUrl.ToString()
                 );
 
-                marketPointList.Add(point);
+                MarketList.Add(point);
             }
 
-            return marketPointList;
+            return MarketList;
 
         }
 

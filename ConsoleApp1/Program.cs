@@ -12,7 +12,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            List<MarketPoint> test = BittrexAPI.APIMethods.GetMarkets();
+            List<Market> test = BittrexAPI.APIMethods.GetMarkets();
 
             foreach(var i in test)
             {

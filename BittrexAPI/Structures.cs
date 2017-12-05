@@ -10,7 +10,7 @@ namespace BittrexAPI
     /// <summary>
     /// Used for the GetMarkets() method
     /// </summary>
-    public class MarketPoint : IEnumerable
+    public class Market : IEnumerable
     {
         private List<object> _marketPointList = new List<object>();
 
@@ -26,7 +26,7 @@ namespace BittrexAPI
         public bool IsSponsored { get; private set; }
         public string LogoUrl { get; private set; }
 
-        public MarketPoint(string marketCurrency, string baseCurrency, string marketCurrencyLong, string baseCurrencyLong, double minTradeSize, string marketName, string isActive,
+        public Market(string marketCurrency, string baseCurrency, string marketCurrencyLong, string baseCurrencyLong, double minTradeSize, string marketName, string isActive,
             DateTime created, string notice, string isSponsored, string logoUrl)
         {
             MarketCurrency = marketCurrency;
@@ -75,7 +75,25 @@ namespace BittrexAPI
 
     }
 
-   
+    public class Currency : IEnumerable
+    {
+        private List<object> _currencyList = new List<object>();
+
+        /// <summary>
+        /// Implements IEnumerator to allow for itterating using foreach
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator GetEnumerator()
+        {
+            return (_currencyList as IEnumerable).GetEnumerator();
+        }
+
+        public string Currency { get; private set; }
+
+
+
+
+    }
 
 
 }
