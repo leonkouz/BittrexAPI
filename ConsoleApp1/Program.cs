@@ -13,14 +13,19 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             //Get Markets test
-            List<Market> listOfMarkets = BittrexAPI.APIMethods.GetMarkets();
+            List<Market> listOfMarkets = APIMethods.GetMarkets();
             
             //Get all supported currencies
-            List<MarketCurrency> listofCurrencies = BittrexAPI.APIMethods.GetCurrencies();
+            List<MarketCurrency> listOfCurrencies = APIMethods.GetCurrencies();
 
             //Get the current tick value for the specified market
             Ticker tick = BittrexAPI.APIMethods.GetTicker("BTC-LTC");
 
+            //Gets the summary of all markets
+            List<MarketSummary> listOfMarketSummaries = APIMethods.GetMarketSummaries();
+
+            //Gets the summary of a specificed market
+            MarketSummary marketSummary = APIMethods.GetMarketSummary("BTC-LTC");
 
         }
     }
