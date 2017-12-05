@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BittrexAPI
+namespace BittrexAPI.Structures
 {
     /// <summary>
     /// Used for the GetMarkets() method
@@ -39,7 +39,7 @@ namespace BittrexAPI
             Created = created;
             Notice = notice;
 
-            if (isSponsored == null || isSponsored == "") 
+            if (isSponsored == null || isSponsored == "")
             {
                 IsSponsored = false;
             }
@@ -74,26 +74,4 @@ namespace BittrexAPI
         }
 
     }
-
-    public class Currency : IEnumerable
-    {
-        private List<object> _currencyList = new List<object>();
-
-        /// <summary>
-        /// Implements IEnumerator to allow for itterating using foreach
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator GetEnumerator()
-        {
-            return (_currencyList as IEnumerable).GetEnumerator();
-        }
-
-        public string Currency { get; private set; }
-
-
-
-
-    }
-
-
 }
