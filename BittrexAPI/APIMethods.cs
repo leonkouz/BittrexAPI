@@ -79,8 +79,36 @@ namespace BittrexAPI
                 MarketCurrencyList.Add(currency);
             }
 
-            return MarketCurrencyList;          
+            return MarketCurrencyList;
         }
+
+        /// <summary>
+        /// Used to get the current tick values for a market.
+        /// </summary>
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        public static Ticker GetTicker(string market)
+        {
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "public/getticker?market=" + market));
+
+            if(response.success == false)
+            {
+                throw new Exception("Unable to retreive data from API");
+            }
+
+            if(response.message == "INVALID_MARKET")
+            {
+                throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
+            }
+
+            double bid = Convert.ToDouble(response.result.Bid);
+            double ask = Convert.ToDouble(response.result.Ask);
+            double last = Convert.ToDouble(response.result.Last);
+
+
+            return new Ticker(bid, ask, last);
+        }
+
+
     }
 }
 
