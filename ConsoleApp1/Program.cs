@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BittrexAPI;
+using BittrexAPI.Structures;
 
 namespace ConsoleApp1
 {
@@ -11,17 +12,18 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            //Get Markets test
+            List<Market> listOfMarkets = BittrexAPI.APIMethods.GetMarkets();
+            
+            //Get all supported currencies
+            List<MarketCurrency> listofCurrencies = BittrexAPI.APIMethods.GetCurrencies();
 
-            List<Market> test = BittrexAPI.APIMethods.GetMarkets();
+            
 
-            foreach(var i in test)
-            {
-                foreach(var o in i)
-                {
-                    Console.WriteLine(o);
-                }
-            }
-            Console.ReadLine();
+
+
+
+
         }
     }
 }
