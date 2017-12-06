@@ -100,7 +100,7 @@ namespace BittrexAPI
             {
                 throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
             }
-
+            
             double bid = Convert.ToDouble(response.result.Bid);
             double ask = Convert.ToDouble(response.result.Ask);
             double last = Convert.ToDouble(response.result.Last);
@@ -135,11 +135,11 @@ namespace BittrexAPI
                     Convert.ToDateTime(item.TimeStamp),
                     Convert.ToDouble(item.Bid),
                     Convert.ToDouble(item.Ask),
-                    float.Parse(item.OpenBuyOrders),
-                    float.Parse(item.OpenSellOrders),
-                    Convert.ToDouble(item.Double),
+                    Convert.ToInt32(item.OpenBuyOrders),
+                    Convert.ToInt32(item.OpenSellOrders),
+                    Convert.ToDouble(item.PrevDay),
                     Convert.ToDateTime(item.Created),
-                    item.DisplayMarketName.ToString()
+                    item.DisplayMarketName
                     );
 
                 marketSummaryList.Add(marketSummary);
@@ -168,26 +168,29 @@ namespace BittrexAPI
                 throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
             }
 
-            var item = response.result;
+            var item = response.result[0];
+                        
+            string marketName = item.MarketName.ToString();
+            double high = Convert.ToDouble(item.High);
+            double low = Convert.ToDouble(item.Low);
+            double volume = Convert.ToDouble(item.Volume);
+            double last = Convert.ToDouble(item.Last);
+            double baseVolume = Convert.ToDouble(item.BaseVolume);
+            DateTime timeStamp = Convert.ToDateTime(item.TimeStamp);
+            double bid = Convert.ToDouble(item.Bid);
+            double ask = Convert.ToDouble(item.Ask);
+            int openBuyOrders = Convert.ToInt32(item.OpenBuyOrders);
+            int openSellOrders = Convert.ToInt32(item.OpenSellOrders);
+            double prevDay = Convert.ToDouble(item.PrevDay);
+            DateTime created = Convert.ToDateTime(item.Created);
+            string displayMarketName = item.DisplayMarketName;
 
-            MarketSummary marketSummary = new MarketSummary(
-                    item.MarketName.ToString(),
-                    Convert.ToDouble(item.High),
-                    Convert.ToDouble(item.Low),
-                    Convert.ToDouble(item.Volume),
-                    Convert.ToDouble(item.Last),
-                    Convert.ToDouble(item.BaseVolume),
-                    Convert.ToDateTime(item.TimeStamp),
-                    Convert.ToDouble(item.Bid),
-                    Convert.ToDouble(item.Ask),
-                    float.Parse(item.OpenBuyOrders),
-                    float.Parse(item.OpenSellOrders),
-                    Convert.ToDouble(item.Double),
-                    Convert.ToDateTime(item.Created),
-                    item.DisplayMarketName.ToString()
-                    );
-
+            MarketSummary marketSummary = new MarketSummary(marketName, high, low, volume, last, baseVolume, timeStamp, bid, ask, openBuyOrders, 
+              openSellOrders, prevDay, created, displayMarketName);
+            
             return marketSummary;
+
+            
         }
 
 

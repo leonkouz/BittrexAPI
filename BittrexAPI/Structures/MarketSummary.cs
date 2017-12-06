@@ -29,14 +29,14 @@ namespace BittrexAPI.Structures
         public DateTime TimeStamp { get; private set; }
         public double Bid { get; private set; }
         public double Ask { get; private set; }
-        public float OpenBuyOrders { get; private set; }
-        public float OpenSellOrders { get; private set; }
+        public int OpenBuyOrders { get; private set; }
+        public int OpenSellOrders { get; private set; }
         public double PrevDay { get; private set; }
         public DateTime Created { get; private set; }
         public string DisplayMarketName { get; private set; }
 
-        public MarketSummary(string marketName, double high, double low, double volume, double last, double baseVolume, DateTime timeStamp, double bid, double ask, float openBuyorders,
-            float openSellOrders, double prevDay, DateTime created, string displayMarketName)
+        public MarketSummary(string marketName, double high, double low, double volume, double last, double baseVolume, DateTime timeStamp, double bid, double ask, int openBuyorders,
+            int openSellOrders, double prevDay, DateTime created, string displayMarketName)
         {
             MarketName = marketName;
             High = high;
@@ -51,7 +51,15 @@ namespace BittrexAPI.Structures
             OpenSellOrders = openSellOrders;
             PrevDay = prevDay;
             Created = created;
-            DisplayMarketName = displayMarketName;
+
+            if (displayMarketName == "" || displayMarketName == null)
+            {
+                DisplayMarketName = "";
+            }
+            else
+            {
+                DisplayMarketName = displayMarketName;
+            }
 
             _marketSummaryList.Add(MarketName);
             _marketSummaryList.Add(High);
