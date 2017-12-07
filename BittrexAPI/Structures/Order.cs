@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BittrexAPI.Structures
 {
-    public class Order
+    public class Order 
     {
         public double Quantity { get; private set; }
         public double Rate { get; private set; }
@@ -19,8 +19,9 @@ namespace BittrexAPI.Structures
 
         public enum Type
         {
-            Buy,
-            Sell
+            buy,
+            sell,
+            both
         };
 
     }

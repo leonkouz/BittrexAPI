@@ -197,9 +197,68 @@ namespace BittrexAPI
         /// <returns>The market summary for the specified market</returns>
         public static OrderBook GetOrderBook(string market, Order.Type orderType)
         {
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getorderbook?market=" + market + "&type=" + orderType.ToString()));
 
+            if (response.success == false)
+            {
+                throw new Exception("Unable to retreive data from API");
+            }
 
+            if (response.message == "INVALID_MARKET")
+            {
+                throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
+            }
 
+            List<Order> buyList = new List<Order>();
+            List<Order> sellList = new List<Order>();
+
+            if(orderType == Order.Type.buy)
+            {
+                foreach (var item in response.result)
+                {
+                    Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
+
+                    buyList.Add(order);
+                }
+
+                OrderBook orderBook = new OrderBook(buyList, orderType);
+                return orderBook;
+
+            }
+            else if(orderType == Order.Type.sell)
+            {
+
+                foreach (var item in response.result)
+                {
+                    Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
+
+                    buyList.Add(order);
+                }
+
+                OrderBook orderBook = new OrderBook(sellList, orderType);
+                return orderBook;
+            }
+            else //else the order type will be 'both'
+            {
+
+                foreach(var item in response.result[0])//For buy orders
+                {
+                    Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
+
+                    buyList.Add(order);
+                }
+                foreach (var item in response.result[1])//For seel orders
+                {
+                    Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
+
+                    buyList.Add(order);
+                }
+
+                OrderBook orderBook = new OrderBook(buyList, sellList);
+                return orderBook;
+            }
+
+            throw new Exception("Error: Should not have got to this point");
         }
 
 

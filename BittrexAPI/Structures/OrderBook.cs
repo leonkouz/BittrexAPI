@@ -6,26 +6,33 @@ using System.Threading.Tasks;
 
 namespace BittrexAPI.Structures
 {
-    class OrderBook
+    public class OrderBook
     {
-        public List<Order> Buy { get; private set; } 
-        public List<Order> Sell { get; private set; }
+        private readonly List<Order> _buys;
+        private readonly List<Order> _sells;
 
-        public OrderBook(List<Order> buy, List<Order> sell)
+        public IReadOnlyCollection<Order> Buys { get; private set; } 
+        public IReadOnlyCollection<Order> Sells { get; private set; }
+
+        public OrderBook(List<Order> buys, List<Order> sells)
         {
-            Buy = buy;
-            Sell = sell;
+            _buys = buys;
+            _sells = sells;
+
+            Buys = _buys.AsReadOnly();
+            Sells = _sells.AsReadOnly();
+          
         }
         
         public OrderBook(List<Order> order, Order.Type orderType)
         {
-            if (orderType == Order.Type.Buy)
+            if (orderType == Order.Type.buy)
             {
-                Buy = order;
+                Buys = order;
             }
-            else if (orderType == Order.Type.Sell)
+            else if (orderType == Order.Type.sell)
             {
-                Sell = order;
+                Sells = order;
             }
         }
     }

@@ -27,6 +27,9 @@ namespace ConsoleApp1
             //Gets the summary of a specificed market
             MarketSummary marketSummary = APIMethods.GetMarketSummary("BTC-LTC");
 
+            //Gets the Order book for the specified market
+            OrderBook book = APIMethods.GetOrderBook("BTC-LTC", Order.Type.both);
+
         }
     }
 }
