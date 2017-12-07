@@ -12,7 +12,7 @@ namespace BittrexAPI.Structures
     /// </summary>
     public class Market : IEnumerable
     {
-        private List<object> _marketPointList = new List<object>();
+        private List<object> _marketList = new List<object>();
 
         public string MarketCurrency { get; private set; }
         public string BaseCurrency { get; private set; }
@@ -51,17 +51,17 @@ namespace BittrexAPI.Structures
             LogoUrl = logoUrl;
 
             //Adds all fields to the list to allow for implementation of IEnumerable
-            _marketPointList.Add(MarketCurrency);
-            _marketPointList.Add(BaseCurrency);
-            _marketPointList.Add(MarketCurrencyLong);
-            _marketPointList.Add(BaseCurrencyLong);
-            _marketPointList.Add(MinTradeSize);
-            _marketPointList.Add(MarketName);
-            _marketPointList.Add(IsActive);
-            _marketPointList.Add(Created);
-            _marketPointList.Add(Notice);
-            _marketPointList.Add(IsSponsored);
-            _marketPointList.Add(LogoUrl);
+            _marketList.Add(MarketCurrency);
+            _marketList.Add(BaseCurrency);
+            _marketList.Add(MarketCurrencyLong);
+            _marketList.Add(BaseCurrencyLong);
+            _marketList.Add(MinTradeSize);
+            _marketList.Add(MarketName);
+            _marketList.Add(IsActive);
+            _marketList.Add(Created);
+            _marketList.Add(Notice);
+            _marketList.Add(IsSponsored);
+            _marketList.Add(LogoUrl);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace BittrexAPI.Structures
         /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
-            return (_marketPointList as IEnumerable).GetEnumerator();
+            return (_marketList as IEnumerable).GetEnumerator();
         }
 
     }

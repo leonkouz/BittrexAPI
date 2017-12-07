@@ -11,6 +11,7 @@ namespace BittrexAPI
 {
     public class APIMethods
     {
+        #region Public Api
         /// <summary>
         /// Used to get the open and available trading markets at Bittrex along with other meta data.
         /// </summary>
@@ -223,11 +224,9 @@ namespace BittrexAPI
 
                 OrderBook orderBook = new OrderBook(buyList, orderType);
                 return orderBook;
-
             }
             else if(orderType == Order.Type.sell)
             {
-
                 foreach (var item in response.result)
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
@@ -240,7 +239,6 @@ namespace BittrexAPI
             }
             else //else the order type will be 'both'
             {
-
                 foreach(var item in response.result.buy)
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
@@ -261,8 +259,14 @@ namespace BittrexAPI
             throw new Exception("Error: Should not have got to this point");
         }
 
+        public static MarketHistory GetMarketHistory()
+        {
+
+        }
 
 
+
+        #endregion
     }
 }
 

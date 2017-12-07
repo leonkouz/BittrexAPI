@@ -19,7 +19,7 @@ namespace ConsoleApp1
             List<MarketCurrency> listOfCurrencies = APIMethods.GetCurrencies();
 
             //Get the current tick value for the specified market
-            Ticker tick = BittrexAPI.APIMethods.GetTicker("BTC-LTC");
+            Ticker tick = APIMethods.GetTicker("BTC-LTC");
 
             //Gets the summary of all markets
             List<MarketSummary> listOfMarketSummaries = APIMethods.GetMarketSummaries();
