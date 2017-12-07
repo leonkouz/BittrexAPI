@@ -303,6 +303,8 @@ namespace BittrexAPI
         /// Used to place a buy order in a specific market. Use buylimit to place limit orders. Make sure you have the proper permissions set on your API keys for this call to work
         /// </summary>
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <param name="quantity">Amount of coins to buy</param>
+        /// <param name="rate">The rate per coin</param>
         /// <returns>The market summary for the specified market</returns>
         public static void PlaceBuyLimitOrder(string market, double quantity, double rate)
         {

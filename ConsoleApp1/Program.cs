@@ -43,7 +43,7 @@ namespace ConsoleApp1
 
             #region MarketAPIs
 
-            
+            APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
 
 
 
