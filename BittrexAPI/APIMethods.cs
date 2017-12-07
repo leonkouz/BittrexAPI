@@ -260,7 +260,6 @@ namespace BittrexAPI
             throw new Exception("Error: Should not have got to this point");
         }
 
-
         /// <summary>
         /// Used to retrieve the latest trades that have occured for a specific market.
         /// </summary>
@@ -296,9 +295,38 @@ namespace BittrexAPI
             return marketHistoryList;
         }
 
+        #endregion
+
+        #region MarketAPIs
+
+        /// <summary>
+        /// Used to place a buy order in a specific market. Use buylimit to place limit orders. Make sure you have the proper permissions set on your API keys for this call to work
+        /// </summary>
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>The market summary for the specified market</returns>
+        public static void PlaceBuyLimitOrder(string market, double quantity, double rate)
+        {
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/buylimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" + 
+                quantity.ToString() + "&rate=" + rate.ToString()));
+
+            if(response.success == "false")
+            {
+                Console.WriteLine("Buy limit order was unsuccessful, error:" + response.result.message + "/r/n" +
+                    "Market: " + market + "/r/n" +
+                    "Quantity: " + quantity + "/r/n" +
+                    "Rate: " + rate
+                    );
+                return;
+            }
+
+            Console.WriteLine(response.result.ToString());
+        }
 
 
         #endregion
+
+
+
     }
 }
 

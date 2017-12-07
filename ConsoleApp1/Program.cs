@@ -12,6 +12,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+
+            Constants.ApiKey = "your api key";
+
+            /*
+            #region PublicAPI
+
             //Get Markets test
             List<Market> listOfMarkets = APIMethods.GetMarkets();
             
@@ -31,6 +37,18 @@ namespace ConsoleApp1
             OrderBook book = APIMethods.GetOrderBook("BTC-LTC", Order.Type.sell);
 
             List<MarketHistory> marketHistory = APIMethods.GetMarketHistory("BTC-LTC");
+
+            #endregion*/
+
+
+            #region MarketAPIs
+
+            
+
+
+
+            #endregion
+
 
         }
     }
