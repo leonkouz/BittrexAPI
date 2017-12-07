@@ -190,7 +190,17 @@ namespace BittrexAPI
             return marketSummary;
         }
 
+        /// <summary>
+        /// Used to get retrieve the orderbook for a given market
+        /// </summary>
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>The market summary for the specified market</returns>
+        public static OrderBook GetOrderBook(string market, Order.Type orderType)
+        {
 
+
+
+        }
 
 
 

@@ -16,6 +16,13 @@ namespace BittrexAPI.Structures
             Quantity = quantity;
             Rate = rate;
         }
+
+        public enum Type
+        {
+            Buy,
+            Sell
+        };
+
     }
 }
 

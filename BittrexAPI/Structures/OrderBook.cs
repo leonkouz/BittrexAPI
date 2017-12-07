@@ -17,19 +17,15 @@ namespace BittrexAPI.Structures
             Sell = sell;
         }
         
-        public OrderBook(List<Order> order, string orderType)
+        public OrderBook(List<Order> order, Order.Type orderType)
         {
-            if (orderType.ToLower() == "buy")
+            if (orderType == Order.Type.Buy)
             {
                 Buy = order;
             }
-            else if (orderType.ToLower() == "sell")
+            else if (orderType == Order.Type.Sell)
             {
                 Sell = order;
-            }
-            else
-            {
-                throw new ArgumentException("Wrong order type");
             }
         }
     }
