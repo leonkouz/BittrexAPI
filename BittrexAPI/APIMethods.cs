@@ -155,7 +155,6 @@ namespace BittrexAPI
         /// <returns>The market summary for the specified market</returns>
         public static MarketSummary GetMarketSummary(string market)
         {
-
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getmarketsummary?market=" + market));
 
             if (response.success == false)
@@ -189,9 +188,10 @@ namespace BittrexAPI
               openSellOrders, prevDay, created, displayMarketName);
             
             return marketSummary;
-
-            
         }
+
+
+
 
 
     }
