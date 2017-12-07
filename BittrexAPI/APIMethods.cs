@@ -232,7 +232,7 @@ namespace BittrexAPI
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
 
-                    buyList.Add(order);
+                    sellList.Add(order);
                 }
 
                 OrderBook orderBook = new OrderBook(sellList, orderType);
