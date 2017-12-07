@@ -241,13 +241,13 @@ namespace BittrexAPI
             else //else the order type will be 'both'
             {
 
-                foreach(var item in response.result[0])//For buy orders
+                foreach(var item in response.result.buy)
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
 
                     buyList.Add(order);
                 }
-                foreach (var item in response.result[1])//For seel orders
+                foreach (var item in response.result.sell)
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
 
