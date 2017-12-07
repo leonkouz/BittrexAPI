@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace BittrexAPI.Structures
         public string FillType { get; private set; }
         public Order.Type OrderType { get; private set; }
 
-        public MarketHistory(int id, DateTime timeStamp, double quantity, double price, double total, string fillType, Order.Type orderType)
+        public MarketHistory(int id, DateTime timeStamp, double quantity, double price, double total, string fillType, string orderType)
         {
             Id = id;
             TimeStamp = timeStamp;
@@ -26,7 +27,15 @@ namespace BittrexAPI.Structures
             Price = price;
             Total = total;
             FillType = fillType;
-            OrderType = OrderType;
+
+            if (orderType == "SELL")
+            {
+                OrderType = Order.Type.sell;
+            }
+            else 
+            {
+                OrderType = Order.Type.buy;
+            }
 
             _marketHistoryList.Add(Id);
             _marketHistoryList.Add(TimeStamp);
@@ -43,7 +52,7 @@ namespace BittrexAPI.Structures
         /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
-            return (_marketList as IEnumerable).GetEnumerator();
+            return (_marketHistoryList as IEnumerable).GetEnumerator();
         }
 
 

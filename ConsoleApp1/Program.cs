@@ -30,6 +30,8 @@ namespace ConsoleApp1
             //Gets the Order book for the specified market
             OrderBook book = APIMethods.GetOrderBook("BTC-LTC", Order.Type.sell);
 
+            List<MarketHistory> marketHistory = APIMethods.GetMarketHistory("BTC-LTC");
+
         }
     }
 }

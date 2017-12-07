@@ -195,6 +195,7 @@ namespace BittrexAPI
         /// Used to get retrieve the orderbook for a given market
         /// </summary>
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <param name="orderType">requires a Order.Type enum to pick the type of order (e.g buy, sell or both)</param>
         /// <returns>The market summary for the specified market</returns>
         public static OrderBook GetOrderBook(string market, Order.Type orderType)
         {
@@ -259,9 +260,40 @@ namespace BittrexAPI
             throw new Exception("Error: Should not have got to this point");
         }
 
-        public static MarketHistory GetMarketHistory()
-        {
 
+        /// <summary>
+        /// Used to retrieve the latest trades that have occured for a specific market.
+        /// </summary>
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>The market summary for the specified market</returns>
+        public static List<MarketHistory> GetMarketHistory(string market)
+        {
+            List<MarketHistory> marketHistoryList = new List<MarketHistory>();
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getmarkethistory?market=" + market));
+
+            if (response.success == false)
+            {
+                throw new Exception("Unable to retreive data from API");
+            }
+
+            foreach(var item in response.result)
+            {
+
+                int id = Convert.ToInt32(item.Id);
+                DateTime timeStamp = Convert.ToDateTime(item.TimeStamp);
+                double quantity = Convert.ToDouble(item.Quantity);
+                double price = Convert.ToDouble(item.Price);
+                double total = Convert.ToDouble(item.Total);
+                string fillType = item.FillType.ToString();
+                string orderType = item.OrderType.ToString();
+
+                MarketHistory marketHistroy = new MarketHistory(id, timeStamp, quantity, price, total, fillType, orderType);
+
+                marketHistoryList.Add(marketHistroy);
+            }
+
+            return marketHistoryList;
         }
 
 
