@@ -196,7 +196,7 @@ namespace BittrexAPI
         /// </summary>
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
         /// <param name="orderType">requires a Order.Type enum to pick the type of order (e.g buy, sell or both)</param>
-        /// <returns>The market summary for the specified market</returns>
+        /// <returns>The order book for the specified market</returns>
         public static OrderBook GetOrderBook(string market, Order.Type orderType)
         {
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getorderbook?market=" + market + "&type=" + orderType.ToString()));
@@ -264,7 +264,7 @@ namespace BittrexAPI
         /// Used to retrieve the latest trades that have occured for a specific market.
         /// </summary>
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
-        /// <returns>The market summary for the specified market</returns>
+        /// <returns>The market history for the specified market</returns>
         public static List<MarketHistory> GetMarketHistory(string market)
         {
             List<MarketHistory> marketHistoryList = new List<MarketHistory>();
