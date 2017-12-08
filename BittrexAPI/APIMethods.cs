@@ -338,8 +338,10 @@ namespace BittrexAPI
         /// <returns>The UUID for the sell order<returns>
         public static string PlaceSellLimitOrder(string market, double quantity, double rate)
         {
-            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/selllimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" +
-                quantity.ToString() + "&rate=" + rate.ToString()));
+            string url = Constants.baseUrl + "market/selllimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" +
+                quantity.ToString() + "&rate=" + rate.ToString() + "&nonce=" + nonce; 
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
             if (response.success == "false")
             {
