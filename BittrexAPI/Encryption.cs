@@ -21,13 +21,6 @@ namespace BittrexAPI
             var sign = BitConverter.ToString(hashmessage).Replace("-", "");
 
             return sign;
-
-            /*var encoding = Encoding.ASCII;
-
-            using (var hasher = new HMACSHA512(Convert.FromBase64String(KeyToSignWith)))
-            {
-                return Convert.ToBase64String(hasher.ComputeHash(encoding.GetBytes(StringToSign)));
-            }*/
         }
     }
 }
