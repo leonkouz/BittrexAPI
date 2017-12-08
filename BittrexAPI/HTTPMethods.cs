@@ -14,7 +14,6 @@ namespace BittrexAPI
 
         private static readonly HttpClient client = new HttpClient();
 
-
         /// <summary>
         /// Sends a HTTP POST method
         /// <param name="url">The URL the request is sent to</param>
@@ -78,7 +77,6 @@ namespace BittrexAPI
 
             return json;
         }
-
 
     }
 }

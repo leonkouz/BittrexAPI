@@ -363,7 +363,16 @@ namespace BittrexAPI
         /// <param name="uuid">The uuid of the order you want to cancel</param>
         public static void CancelOrder(string uuid)
         {
-            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/cancel?apikey=" + Constants.ApiKey + "Y&uuid=" + uuid));
+            string url = Constants.baseUrl + "market/cancel?apikey=" + Constants.ApiKey + "Y&uuid=" + uuid + "&nonce=" + nonce;
+
+            string apiSign = Encryption.HmacSHA512Sign(url, Constants.SecretKey);
+
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "apisign", apiSign},
+            };
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(url, headers));
 
             if (response.success == "false")
             {
@@ -372,6 +381,8 @@ namespace BittrexAPI
                     );
                 return;
             }
+
+            Console.WriteLine("Order: " + uuid + " has been canceled");
         }
 
         /// <summary>
@@ -381,8 +392,6 @@ namespace BittrexAPI
         /// <returns>A list of open orders<returns>
         public static List<OpenOrder> GetOpenOrders(string market)
         {
-            List<OpenOrder> openOrdersList = new List<OpenOrder>();
-
             string url = Constants.baseUrl + "market/getopenorders?apikey=" + Constants.ApiKey + "&market=" + market + "&nonce=" + nonce;
 
             string apiSign = Encryption.HmacSHA512Sign(url, Constants.SecretKey);
@@ -409,6 +418,8 @@ namespace BittrexAPI
             {
                 throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
             }
+
+            List<OpenOrder> openOrdersList = new List<OpenOrder>();
 
             if (response.result == null)
             {

@@ -14,7 +14,6 @@ namespace BittrexAPI
         /// </summary>
         public static string HmacSHA512Sign(string StringToSign, string KeyToSignWith)
         {
-
             var hmac = new HMACSHA512(Encoding.ASCII.GetBytes(KeyToSignWith));
             var messagebyte = Encoding.ASCII.GetBytes(StringToSign);
             var hashmessage = hmac.ComputeHash(messagebyte);
