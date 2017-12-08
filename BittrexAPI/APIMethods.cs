@@ -305,8 +305,8 @@ namespace BittrexAPI
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
         /// <param name="quantity">Amount of coins to buy</param>
         /// <param name="rate">The rate per coin</param>
-        /// <returns>The market summary for the specified market</returns>
-        public static void PlaceBuyLimitOrder(string market, double quantity, double rate)
+        /// <returns>The UUID for the buy order<returns>
+        public static string PlaceBuyLimitOrder(string market, double quantity, double rate)
         {
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/buylimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" + 
                 quantity.ToString() + "&rate=" + rate.ToString()));
@@ -319,10 +319,12 @@ namespace BittrexAPI
                     "Quantity: " + quantity + "\n" +
                     "Rate: " + rate
                     );
-                return;
+                return null;
             }
 
             Console.WriteLine("Buy limit order placed: " + response.result.ToString());
+
+            return response.result.ToString();
         }
 
         /// <summary>
@@ -331,8 +333,8 @@ namespace BittrexAPI
         /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
         /// <param name="quantity">Amount of coins to buy</param>
         /// <param name="rate">The rate per coin</param>
-        /// <returns>The market summary for the specified market</returns>
-        public static void PlaceSellLimitOrder(string market, double quantity, double rate)
+        /// <returns>The UUID for the sell order<returns>
+        public static string PlaceSellLimitOrder(string market, double quantity, double rate)
         {
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/selllimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" +
                 quantity.ToString() + "&rate=" + rate.ToString()));
@@ -345,10 +347,12 @@ namespace BittrexAPI
                     "Quantity: " + quantity + "\n" +
                     "Rate: " + rate
                     );
-                return;
+                return null;
             }
 
             Console.WriteLine("Sell limit order placed: " + response.result.ToString());
+
+            return response.result.ToString();
         }
 
 
