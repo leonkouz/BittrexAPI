@@ -355,8 +355,24 @@ namespace BittrexAPI
             return response.result.ToString();
         }
 
+        /// <summary>
+        /// Used to cancel a buy or sell order.
+        /// </summary>
+        /// <param name="uuid">The uuid of the order you want to cancel</param>
+        public static void CancelOrder(string uuid)
+        {
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/cancel?apikey=" + Constants.ApiKey + "Y&uuid=" + uuid));
 
-        
+            if (response.success == "false")
+            {
+                Console.WriteLine("Unable to cancel order" + "\n" +
+                    "Error: " + response.message
+                    );
+                return;
+            }
+        }
+
+
         #endregion
 
 
