@@ -30,7 +30,7 @@ namespace BittrexAPI.Structures
         public double ConditionTarget { get; private set; }
 
         public OpenOrder(string uuid, string orderUuid, string exchange, string orderType, double quantity, double quantityRemaining, double limit, double comissionPaid, double price,
-            double pricePerUnit, DateTime opened, DateTime closed, bool cancelInitiatied, bool immediateOrCancel, bool isConditional, string condition, double conditionTarget)
+            string pricePerUnit, DateTime opened, string closed, bool cancelInitiatied, bool immediateOrCancel, bool isConditional, string condition, string conditionTarget)
         {
             Uuid = uuid;
             OrderUuid = orderUuid;
@@ -41,14 +41,35 @@ namespace BittrexAPI.Structures
             Limit = limit;
             ComissionPaid = comissionPaid;
             Price = price;
-            PricePerUnit = pricePerUnit;
             Opened = opened;
-            Closed = closed;
+            if (pricePerUnit == "" || pricePerUnit == null || pricePerUnit == "null")
+            {
+                PricePerUnit = 0;
+            }
+            else
+            {
+                PricePerUnit = Convert.ToDouble(pricePerUnit);
+            }
+            if (closed == "" || closed == null || closed == "null")
+            {
+                Closed = DateTime.MinValue;
+            }
+            else
+            {
+                Closed = Convert.ToDateTime(closed);
+            }
             CancelInitiated = cancelInitiatied;
             ImmediateOrCancel = immediateOrCancel;
             IsConditional = isConditional;
             Condition = condition;
-            ConditionTarget = conditionTarget;
+            if (conditionTarget == "" || conditionTarget == null || conditionTarget == "null")
+            {
+                ConditionTarget = 0;
+            }
+            else
+            {
+                ConditionTarget = Convert.ToDouble(conditionTarget);
+            }
 
             _openOrderList.Add(Uuid);
             _openOrderList.Add(OrderUuid);
@@ -69,6 +90,11 @@ namespace BittrexAPI.Structures
             _openOrderList.Add(ConditionTarget);
         }
         
+        public OpenOrder()
+        {
+
+        }
+
         /// <summary>
         /// Implements IEnumerator to allow for itterating using foreach
         /// </summary>

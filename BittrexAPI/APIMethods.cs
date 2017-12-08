@@ -11,6 +11,8 @@ namespace BittrexAPI
 {
     public class APIMethods
     {
+        public static string nonce = "2342342342";
+
         #region Public Api
         /// <summary>
         /// Used to get the open and available trading markets at Bittrex along with other meta data.
@@ -373,15 +375,94 @@ namespace BittrexAPI
         }
 
         /// <summary>
-        /// 
+        /// Get all orders that you currently have opened. A specific market can be requested
         /// </summary>
-        public 
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>A list of open orders<returns>
+        public static List<OpenOrder> GetOpenOrders(string market)
+        {
+            List<OpenOrder> openOrdersList = new List<OpenOrder>();
+
+            string url = Constants.baseUrl + "market/getopenorders?apikey=" + Constants.ApiKey + "&market=" + market + "&nonce=" + nonce;
+
+            string apiSign = Encryption.HmacSHA512Sign(url, Constants.SecretKey);
+
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "apisign", apiSign},
+            };
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(url, headers));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get open orders" + "\n" +
+                        "Error: " + response.message + "\n" 
+                        );
+                    throw new Exception("Unable to retreive data from API");
+                }
+            }
+
+            if (response.message == "INVALID_MARKET")
+            {
+                throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
+            }
+
+            if (response.result == null)
+            {
+                throw new NoOpenOrdersException();
+            }
+            else
+            {
+                foreach (var item in response.result)
+                {
+                    string uuid = item.Uuid.ToString();
+                    string orderUuid = item.OrderUuid.ToString();
+                    string exchange = item.Exchange.ToString();
+                    string orderType = item.OrderType.ToString();
+                    double quantity = Convert.ToDouble(item.Quantity);
+                    double quantityRemaining = Convert.ToDouble(item.QuantityRemaining);
+                    double limit = Convert.ToDouble(item.Limit);
+                    double commissionPaid = Convert.ToDouble(item.CommissionPaid);
+                    double price = Convert.ToDouble(item.Price);
+                    string pricePerUnit = item.PricePerUnit.ToString();
+                    DateTime opened = Convert.ToDateTime(item.Opened);
+                    string closed = item.Closed.ToString();
+                    bool cancelInitiated = Convert.ToBoolean(item.CancelInitiated);
+                    bool immediateOrCancel = Convert.ToBoolean(item.ImmediateOrCancel);
+                    bool isConditional = Convert.ToBoolean(item.IsConditional);
+                    string condition = item.Condition.ToString();
+                    string conditionTarget = item.ConditionTarget.ToString();
+
+                    OpenOrder openOrder = new OpenOrder(uuid, orderUuid, exchange, orderType, quantity, quantityRemaining, limit, commissionPaid, price, pricePerUnit, opened, closed,
+                        cancelInitiated, immediateOrCancel, isConditional, condition, conditionTarget);
+
+                    openOrdersList.Add(openOrder);
+                }
+            }
+            return openOrdersList;
+        }
 
 
         #endregion
 
 
 
+    }
+
+    [Serializable()]
+    public class NoOpenOrdersException : Exception
+    {
+        public NoOpenOrdersException()
+        {
+        }
+
+        public NoOpenOrdersException(string message)
+        : base(message)
+        { 
+        }
     }
 }
 

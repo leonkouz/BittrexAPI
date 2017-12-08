@@ -10,6 +10,7 @@ namespace BittrexAPI
     {
         public static string baseUrl = "https://bittrex.com/api/v1.1/";
         public static string ApiKey = "";
+        public static string SecretKey = "";
 
 
     }

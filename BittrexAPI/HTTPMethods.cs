@@ -54,5 +54,31 @@ namespace BittrexAPI
             return json;
         }
 
+        public static string HttpGet(string url, Dictionary<string, string> headers)
+        {
+            string json;
+
+            //Creates a GET request
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            //Add the headers to the header collection
+            foreach (var header in headers)
+            {
+                request.Headers.Add(header.Key, header.Value);
+            }
+
+            //Sends the GET request
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return json;
+        }
+
+
     }
 }

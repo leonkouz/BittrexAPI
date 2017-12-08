@@ -14,12 +14,20 @@ namespace BittrexAPI
         /// </summary>
         public static string HmacSHA512Sign(string StringToSign, string KeyToSignWith)
         {
-            var encoding = Encoding.UTF8;
+
+            var hmac = new HMACSHA512(Encoding.ASCII.GetBytes(KeyToSignWith));
+            var messagebyte = Encoding.ASCII.GetBytes(StringToSign);
+            var hashmessage = hmac.ComputeHash(messagebyte);
+            var sign = BitConverter.ToString(hashmessage).Replace("-", "");
+
+            return sign;
+
+            /*var encoding = Encoding.ASCII;
 
             using (var hasher = new HMACSHA512(Convert.FromBase64String(KeyToSignWith)))
             {
                 return Convert.ToBase64String(hasher.ComputeHash(encoding.GetBytes(StringToSign)));
-            }
+            }*/
         }
     }
 }

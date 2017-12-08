@@ -14,6 +14,7 @@ namespace ConsoleApp1
         {
 
             Constants.ApiKey = "your api key";
+            Constants.SecretKey = "your secret key";
 
             /*
             #region PublicAPI
@@ -49,6 +50,7 @@ namespace ConsoleApp1
 
             APIMethods.CancelOrder("1231aweqweqwe123");
 
+            List<OpenOrder> orders = APIMethods.GetOpenOrders("BTC-GRS");
 
             #endregion
 
