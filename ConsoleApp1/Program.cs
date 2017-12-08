@@ -39,10 +39,10 @@ namespace ConsoleApp1
 
             List<MarketHistory> marketHistory = APIMethods.GetMarketHistory("BTC-LTC");
 
-            #endregion*/
+            #endregion
 
-
-            #region MarketAPIs
+            
+            #region MarketAPI
 
             APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
 
@@ -52,8 +52,15 @@ namespace ConsoleApp1
 
             List<OpenOrder> orders = APIMethods.GetOpenOrders("BTC-GRS");
 
-            #endregion
+            #endregion*/
 
+            #region AccountAPI
+
+            List<Balance> balanceList = APIMethods.GetBalances();
+
+
+
+            #endregion 
 
         }
     }

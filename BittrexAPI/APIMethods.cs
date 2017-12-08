@@ -13,7 +13,7 @@ namespace BittrexAPI
     {
         public static string nonce = Guid.NewGuid().ToString("N");
 
-        #region Public Api
+        #region PublicApi
         /// <summary>
         /// Used to get the open and available trading markets at Bittrex along with other meta data.
         /// </summary>
@@ -299,7 +299,7 @@ namespace BittrexAPI
 
         #endregion
 
-        #region MarketAPIs
+        #region MarketAPI
 
         /// <summary>
         /// Used to place a buy order in a specific market. Use buylimit to place limit orders. Make sure you have the proper permissions set on your API keys for this call to work
@@ -449,8 +449,58 @@ namespace BittrexAPI
 
         #endregion
 
+        #region AccountApi
+
+        /// <summary>
+        /// Used to retrieve all balances from your account
+        /// </summary>
+        /// <returns>A list of balances</returns>
+        public static List<Balance> GetBalances()
+        {
+            List<Balance> balanceList = new List<Balance>();
+
+            string url = Constants.baseUrl + "account/getbalances?apikey=" + Constants.ApiKey + "&nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get balances from API");
+                }
+            }
+
+            if(response.result == null)
+            {
+                throw new NoCurrentBalancesException();
+            }
+
+            foreach(var item in response.result)
+            {
+
+                string currency = item.Currency.ToString();
+                string balance = item.Balance.ToString();
+                string available = item.Available.ToString();
+                string pending = item.Pending.ToString();
+                string cryptoAddress = item.CryptoAddress.ToString();
+                bool requested = Convert.ToBoolean(item.Requested);
+                string uuid = item.uuid.ToString();
+
+                Balance b = new Balance(currency, balance, available, pending, cryptoAddress, requested, uuid);
+
+                balanceList.Add(b);
+            }
+
+            return balanceList;
+        }
 
 
+
+        #endregion
     }
 
     [Serializable()]
@@ -461,6 +511,19 @@ namespace BittrexAPI
         }
 
         public NoOpenOrdersException(string message)
+        : base(message)
+        {
+        }
+    }
+
+    [Serializable()]
+    public class NoCurrentBalancesException : Exception
+    {
+        public NoCurrentBalancesException()
+        {
+        }
+
+        public NoCurrentBalancesException(string message)
         : base(message)
         {
         }
