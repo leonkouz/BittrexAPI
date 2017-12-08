@@ -365,14 +365,7 @@ namespace BittrexAPI
         {
             string url = Constants.baseUrl + "market/cancel?apikey=" + Constants.ApiKey + "Y&uuid=" + uuid + "&nonce=" + nonce;
 
-            string apiSign = Encryption.HmacSHA512Sign(url, Constants.SecretKey);
-
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "apisign", apiSign},
-            };
-
-            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(url, headers));
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
             if (response.success == "false")
             {
@@ -394,14 +387,7 @@ namespace BittrexAPI
         {
             string url = Constants.baseUrl + "market/getopenorders?apikey=" + Constants.ApiKey + "&market=" + market + "&nonce=" + nonce;
 
-            string apiSign = Encryption.HmacSHA512Sign(url, Constants.SecretKey);
-
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "apisign", apiSign},
-            };
-
-            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(url, headers));
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
             if (response.success == false)
             {
@@ -472,7 +458,7 @@ namespace BittrexAPI
 
         public NoOpenOrdersException(string message)
         : base(message)
-        { 
+        {
         }
     }
 }

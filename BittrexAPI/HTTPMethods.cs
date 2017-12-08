@@ -53,6 +53,10 @@ namespace BittrexAPI
             return json;
         }
 
+        /// <summary>
+        /// Sends a HTTP Get method with headers
+        /// <param name="url">The URL the request is sent to</param>
+        /// </summary>
         public static string HttpGet(string url, Dictionary<string, string> headers)
         {
             string json;
@@ -78,5 +82,42 @@ namespace BittrexAPI
             return json;
         }
 
+        /// <summary>
+        /// Sends a HTTP Get method with headers and signs the URL  
+        /// <param name="url">The URL the request is sent to</param>
+        /// </summary>
+        public static string HttpSignAndGet(string url)
+        {
+            string json;
+
+            //Encrypts the URL with the secret key 
+            string apiSign = Encryption.HmacSHA512Sign(url, Constants.SecretKey);
+
+            //Creates a header with the signtature
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "apisign", apiSign},
+            };
+
+            //Creates a GET request
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            //Add the header to the header collection
+            foreach (var header in headers)
+            {
+                request.Headers.Add(header.Key, header.Value);
+            }
+
+            //Sends the GET request
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return json;
+        }
     }
 }
