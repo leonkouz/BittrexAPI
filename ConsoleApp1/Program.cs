@@ -45,7 +45,7 @@ namespace ConsoleApp1
 
             APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
 
-
+            APIMethods.PlaceSellLimitOrder("BTC-LTC", 5, 0.17);
 
             #endregion
 
