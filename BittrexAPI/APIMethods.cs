@@ -313,7 +313,7 @@ namespace BittrexAPI
 
             if(response.success == "false")
             {
-                Console.WriteLine("Buy limit order was UNSUCCESSFUL" + "\n" + 
+                Console.WriteLine("*Buy limit order was UNSUCCESSFUL" + "\n" + 
                     "Error: " + response.message + "\n" +
                     "Market: " + market + "\n" +
                     "Quantity: " + quantity + "\n" +
@@ -341,7 +341,7 @@ namespace BittrexAPI
 
             if (response.success == "false")
             {
-                Console.WriteLine("Sell limit order was UNSUCCESSFUL" + "\n" +
+                Console.WriteLine("*Sell limit order was UNSUCCESSFUL" + "\n" +
                     "Error: " + response.message + "\n" +
                     "Market: " + market + "\n" +
                     "Quantity: " + quantity + "\n" +
@@ -365,12 +365,17 @@ namespace BittrexAPI
 
             if (response.success == "false")
             {
-                Console.WriteLine("Unable to cancel order" + "\n" +
+                Console.WriteLine("*Unable to cancel order" + "\n" +
                     "Error: " + response.message
                     );
                 return;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public 
 
 
         #endregion
