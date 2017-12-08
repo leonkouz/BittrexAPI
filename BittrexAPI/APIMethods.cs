@@ -11,7 +11,7 @@ namespace BittrexAPI
 {
     public class APIMethods
     {
-        public static string nonce = "2342342342";
+        public static string nonce = Guid.NewGuid().ToString("N");
 
         #region Public Api
         /// <summary>
@@ -310,8 +310,10 @@ namespace BittrexAPI
         /// <returns>The UUID for the buy order<returns>
         public static string PlaceBuyLimitOrder(string market, double quantity, double rate)
         {
-            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "market/buylimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" + 
-                quantity.ToString() + "&rate=" + rate.ToString()));
+            string url = Constants.baseUrl + "market/buylimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" +
+                quantity.ToString() + "&rate=" + rate.ToString() + "&nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
             if(response.success == "false")
             {
