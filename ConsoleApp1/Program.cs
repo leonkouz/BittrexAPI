@@ -13,8 +13,8 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            Constants.ApiKey = "your api key";
-            Constants.SecretKey = "your secret key";
+            Constants.ApiKey = "Enter api key here";
+            Constants.SecretKey = "Enter Secret key here";
 
             /*
             #region PublicAPI
@@ -56,7 +56,7 @@ namespace ConsoleApp1
 
             #region AccountAPI
 
-            //List<Balance> balanceList = APIMethods.GetBalances();
+            List<Balance> balanceList = APIMethods.GetBalances();
 
             Balance balance = APIMethods.GetBalance("GRS");
 

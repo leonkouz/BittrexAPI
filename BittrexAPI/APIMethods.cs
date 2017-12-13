@@ -26,7 +26,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
             foreach (var item in response.result)
@@ -64,10 +64,10 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
-            foreach(var item in response.result)
+            foreach (var item in response.result)
             {
                 MarketCurrency currency = new MarketCurrency(
                     item.Currency.ToString(),
@@ -94,16 +94,16 @@ namespace BittrexAPI
         {
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "public/getticker?market=" + market));
 
-            if(response.success == false)
+            if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
-            if(response.message == "INVALID_MARKET")
+            if (response.message == "INVALID_MARKET")
             {
                 throw new ArgumentException("This is not a valid market. Use GetMarkets() to get a list of valid markets.");
             }
-            
+
             double bid = Convert.ToDouble(response.result.Bid);
             double ask = Convert.ToDouble(response.result.Ask);
             double last = Convert.ToDouble(response.result.Last);
@@ -121,9 +121,9 @@ namespace BittrexAPI
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpGet(Constants.baseUrl + "/public/getmarketsummaries"));
 
-            if(response.success == false)
+            if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
             foreach (var item in response.result)
@@ -162,7 +162,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
             if (response.message == "INVALID_MARKET")
@@ -171,7 +171,7 @@ namespace BittrexAPI
             }
 
             var item = response.result[0];
-                        
+
             string marketName = item.MarketName.ToString();
             double high = Convert.ToDouble(item.High);
             double low = Convert.ToDouble(item.Low);
@@ -187,9 +187,9 @@ namespace BittrexAPI
             DateTime created = Convert.ToDateTime(item.Created);
             string displayMarketName = item.DisplayMarketName;
 
-            MarketSummary marketSummary = new MarketSummary(marketName, high, low, volume, last, baseVolume, timeStamp, bid, ask, openBuyOrders, 
+            MarketSummary marketSummary = new MarketSummary(marketName, high, low, volume, last, baseVolume, timeStamp, bid, ask, openBuyOrders,
               openSellOrders, prevDay, created, displayMarketName);
-            
+
             return marketSummary;
         }
 
@@ -205,7 +205,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
             if (response.message == "INVALID_MARKET")
@@ -216,7 +216,7 @@ namespace BittrexAPI
             List<Order> buyList = new List<Order>();
             List<Order> sellList = new List<Order>();
 
-            if(orderType == Order.Type.buy)
+            if (orderType == Order.Type.buy)
             {
                 foreach (var item in response.result)
                 {
@@ -228,7 +228,7 @@ namespace BittrexAPI
                 OrderBook orderBook = new OrderBook(buyList, orderType);
                 return orderBook;
             }
-            else if(orderType == Order.Type.sell)
+            else if (orderType == Order.Type.sell)
             {
                 foreach (var item in response.result)
                 {
@@ -242,7 +242,7 @@ namespace BittrexAPI
             }
             else //else the order type will be 'both'
             {
-                foreach(var item in response.result.buy)
+                foreach (var item in response.result.buy)
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
 
@@ -275,10 +275,10 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                throw new Exception("Unable to get data from API: " + response.message.ToString());
             }
 
-            foreach(var item in response.result)
+            foreach (var item in response.result)
             {
 
                 int id = Convert.ToInt32(item.Id);
@@ -315,9 +315,9 @@ namespace BittrexAPI
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
-            if(response.success == "false")
+            if (response.success == "false")
             {
-                Console.WriteLine("*Buy limit order was UNSUCCESSFUL" + "\n" + 
+                Console.WriteLine("*Buy limit order was UNSUCCESSFUL" + "\n" +
                     "Error: " + response.message + "\n" +
                     "Market: " + market + "\n" +
                     "Quantity: " + quantity + "\n" +
@@ -341,7 +341,7 @@ namespace BittrexAPI
         public static string PlaceSellLimitOrder(string market, double quantity, double rate)
         {
             string url = Constants.baseUrl + "market/selllimit?apikey=" + Constants.ApiKey + "&market=" + market + "&quantity=" +
-                quantity.ToString() + "&rate=" + rate.ToString() + "&nonce=" + nonce; 
+                quantity.ToString() + "&rate=" + rate.ToString() + "&nonce=" + nonce;
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
@@ -398,9 +398,9 @@ namespace BittrexAPI
                 if (response.success == "false")
                 {
                     Console.WriteLine("*Unable to get open orders" + "\n" +
-                        "Error: " + response.message + "\n" 
+                        "Error: " + response.message + "\n"
                         );
-                    throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
                 }
             }
 
@@ -469,16 +469,16 @@ namespace BittrexAPI
                     Console.WriteLine("*Unable to get balances" + "\n" +
                         "Error: " + response.message + "\n"
                         );
-                    throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
                 }
             }
 
-            if(response.result == null)
+            if (response.result == null)
             {
                 throw new NoCurrentBalancesException();
             }
 
-            foreach(var item in response.result)
+            foreach (var item in response.result)
             {
                 string currency = item.Currency.ToString();
                 string balance = item.Balance.ToString();
@@ -486,7 +486,7 @@ namespace BittrexAPI
                 string pending = item.Pending.ToString();
                 string cryptoAddress = item.CryptoAddress.ToString();
                 bool requested = Convert.ToBoolean(item.Requested);
-                string uuid = item.uuid.ToString();
+                string uuid = item.uuid;
 
                 Balance b = new Balance(currency, balance, available, pending, cryptoAddress, requested, uuid);
 
@@ -514,7 +514,7 @@ namespace BittrexAPI
                     Console.WriteLine("*Unable to get balances" + "\n" +
                         "Error: " + response.message + "\n"
                         );
-                    throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
                 }
             }
 
@@ -525,25 +525,101 @@ namespace BittrexAPI
 
             Balance b = null;
 
-            foreach (var item in response.result)
-            {
-                string currency = item.Currency.ToString();
-                string balance = item.Balance.ToString();
-                string available = item.Available.ToString();
-                string pending = item.Pending.ToString();
-                string cryptoAddress = item.CryptoAddress.ToString();
-                bool requested = Convert.ToBoolean(item.Requested);
-                string uuid = item.uuid.ToString();
+            string curr = response.result.Currency.ToString();
+            string balance = response.result.Balance.ToString();
+            string available = response.result.Available.ToString();
+            string pending = response.result.Pending.ToString();
+            string cryptoAddress = response.result.CryptoAddress.ToString();
+            bool requested = Convert.ToBoolean(response.result.Requested);
+            string uuid = response.result.uuid;
 
-                b = new Balance(currency, balance, available, pending, cryptoAddress, requested, uuid);
-                
-            }
+            b = new Balance(curr, balance, available, pending, cryptoAddress, requested, uuid);
+
 
             return b;
         }
 
-           
+        /// <summary>
+        /// Used to retrieve or generate an address for a specific currency. If one does not exist, the call will fail and return ADDRESS_GENERATING until one is available.
+        /// </summary>
+        /// <param name="currency">required	a string literal for the currency (ie. BTC)</param>
+        /// <returns>The address, or if the call fails will return ADDRESS_GENERATING until address is available</returns>
+        public static string GetDepositAddress(string currency)
+        {
+            string url = Constants.baseUrl + "account/getdepositaddress?apikey=" + Constants.ApiKey + "&currency=" + currency + "&nonce=" + nonce;
 
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                }
+            }
+
+            return response.result.address.ToString();
+        }
+
+        /// <summary>
+        /// Used to withdraw funds from your account. note: please account for txfee.
+        /// </summary>
+        /// <param name="currency">A string literal for the currency (ie. BTC)</param>
+        /// <param name="quantity">The quantity of coins to withdraw</param>
+        /// <param name="address">The address to send the funds to</param>
+        /// <returns>The UUID of the transcation</returns>
+        public static string Withdraw(string currency, double quantity, string address)
+        {
+            string url = Constants.baseUrl + "account/withdraw?apikey=" + Constants.ApiKey + "&currency=" + currency + "&quantity=" + quantity + "&address=" + address + " & nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                }
+            }
+
+            return response.result.uuid.ToString();
+
+        }
+
+        /// <summary>
+        /// Used to withdraw funds from your account. note: please account for txfee.
+        /// </summary>
+        /// <param name="currency">A string literal for the currency (ie. BTC)</param>
+        /// <param name="quantity">The quantity of coins to withdraw</param>
+        /// <param name="address">The address to send the funds to</param>
+        /// <param name="paymentID">Used for CryptoNotes/BitShareX/Nxt optional field (memo/paymentid)</param>
+        /// <returns>The UUID of the transcation</returns>
+        public static string Withdraw(string currency, double quantity, string address, string paymentID)
+        {
+            string url = Constants.baseUrl + "account/withdraw?apikey=" + Constants.ApiKey + "&currency=" + currency + "&quantity=" + quantity + "&address=" + address + 
+                "&paymentid=" + paymentID + " & nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                }
+            }
+
+            return response.result.uuid.ToString();
+        }
 
         #endregion
     }
