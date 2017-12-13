@@ -26,7 +26,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to retrieve data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             foreach (var item in response.result)
@@ -64,7 +64,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to retrieve data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             foreach(var item in response.result)
@@ -96,7 +96,7 @@ namespace BittrexAPI
 
             if(response.success == false)
             {
-                throw new Exception("Unable to retreive data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             if(response.message == "INVALID_MARKET")
@@ -123,7 +123,7 @@ namespace BittrexAPI
 
             if(response.success == false)
             {
-                throw new Exception("Unable to retreive data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             foreach (var item in response.result)
@@ -162,7 +162,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to retreive data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             if (response.message == "INVALID_MARKET")
@@ -205,7 +205,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to retreive data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             if (response.message == "INVALID_MARKET")
@@ -275,7 +275,7 @@ namespace BittrexAPI
 
             if (response.success == false)
             {
-                throw new Exception("Unable to retreive data from API");
+                throw new Exception("Unable to get balances from API: " + response.message.ToString());
             }
 
             foreach(var item in response.result)
@@ -400,7 +400,7 @@ namespace BittrexAPI
                     Console.WriteLine("*Unable to get open orders" + "\n" +
                         "Error: " + response.message + "\n" 
                         );
-                    throw new Exception("Unable to retreive data from API");
+                    throw new Exception("Unable to get balances from API: " + response.message.ToString());
                 }
             }
 
@@ -446,7 +446,6 @@ namespace BittrexAPI
             return openOrdersList;
         }
 
-
         #endregion
 
         #region AccountApi
@@ -470,7 +469,7 @@ namespace BittrexAPI
                     Console.WriteLine("*Unable to get balances" + "\n" +
                         "Error: " + response.message + "\n"
                         );
-                    throw new Exception("Unable to get balances from API");
+                    throw new Exception("Unable to get balances from API: " + response.message.ToString());
                 }
             }
 
@@ -481,7 +480,6 @@ namespace BittrexAPI
 
             foreach(var item in response.result)
             {
-
                 string currency = item.Currency.ToString();
                 string balance = item.Balance.ToString();
                 string available = item.Available.ToString();
@@ -498,6 +496,53 @@ namespace BittrexAPI
             return balanceList;
         }
 
+        /// <summary>
+        /// Used to retrieve the balance from your account for a specific currency.
+        /// </summary>
+        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <returns>The balance from your account for a specific currency</returns>
+        public static Balance GetBalance(string market)
+        {
+            string url = Constants.baseUrl + "account/getbalance?apikey=" + Constants.ApiKey + "&currency=" + market + "&nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get balances from API: " + response.message.ToString());
+                }
+            }
+
+            if (response.result == null)
+            {
+                throw new NoCurrentBalancesException();
+            }
+
+            Balance b = null;
+
+            foreach (var item in response.result)
+            {
+                string currency = item.Currency.ToString();
+                string balance = item.Balance.ToString();
+                string available = item.Available.ToString();
+                string pending = item.Pending.ToString();
+                string cryptoAddress = item.CryptoAddress.ToString();
+                bool requested = Convert.ToBoolean(item.Requested);
+                string uuid = item.uuid.ToString();
+
+                b = new Balance(currency, balance, available, pending, cryptoAddress, requested, uuid);
+                
+            }
+
+            return b;
+        }
+
+           
 
 
         #endregion
