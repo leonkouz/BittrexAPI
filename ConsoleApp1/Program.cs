@@ -64,7 +64,9 @@ namespace ConsoleApp1
 
             AccountOrder accountOrder = APIMethods.GetOrder("uuid here");
 
+            List<HistoryOrder> listOfOrderHistory = APIMethods.GetOrderHistory();
 
+            List<HistoryOrder> listOfSpecificOrderHistory = APIMethods.GetOrderHistory("BTC-LTC");
 
 
             #endregion 

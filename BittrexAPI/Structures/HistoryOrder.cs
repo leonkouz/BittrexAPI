@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BittrexAPI.Structures
 {
-    class HistoryOrder
+    public class HistoryOrder
     {
         private List<object> _historyOrderList = new List<object>();
 

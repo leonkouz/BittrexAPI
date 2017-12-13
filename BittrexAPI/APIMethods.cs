@@ -721,7 +721,7 @@ namespace BittrexAPI
                 historyOrdersList.Add(order);
             }
 
-
+            return historyOrdersList;
 
         }
 
@@ -732,6 +732,8 @@ namespace BittrexAPI
         /// <returns></returns>
         public static List<HistoryOrder> GetOrderHistory(string market)
         {
+            List<HistoryOrder> historyOrdersList = new List<HistoryOrder>();
+
             string url = Constants.baseUrl + "account/getorderhistory?apikey=" + Constants.ApiKey + "&market=" + market + "&nonce=" + nonce;
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
@@ -747,8 +749,30 @@ namespace BittrexAPI
                 }
             }
 
+            foreach (var item in response.result)
+            {
+                string orderUuid = item.OrderUuid.ToString();
+                string exchange = item.Exchange.ToString();
+                string timeStamp = item.TimeStamp.ToString();
+                string ordertype = item.OrderType.ToString();
+                string limit = item.Limit.ToString();
+                string quantity = item.Quantity.ToString();
+                string quantityRemaining = item.QuantityRemaining.ToString();
+                string commission = item.Commission.ToString();
+                string price = item.Price.ToString();
+                string pricePerUnit = item.PricePerUnit.ToString();
+                string isConditional = item.IsConditional.ToString();
+                string condition = item.Condition.ToString();
+                string conditionTarget = item.ConditionTarget.ToString();
+                string immediateOrCancel = item.ImmediateOrCancel.ToString();
 
+                HistoryOrder order = new HistoryOrder(orderUuid, exchange, timeStamp, ordertype, limit, quantity, quantityRemaining, commission, price, pricePerUnit, isConditional, condition, conditionTarget,
+                    immediateOrCancel);
 
+                historyOrdersList.Add(order);
+            }
+
+            return historyOrdersList;
         }
 
 
