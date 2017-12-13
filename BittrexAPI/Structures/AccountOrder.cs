@@ -90,9 +90,9 @@ namespace BittrexAPI.Structures
                 CommissionReserveRemaining = Convert.ToDouble(commissionReservedRemaining);
 
             if (commissionPaid == "" || commissionPaid == null || commissionPaid == "null")
-                ComissionPaid = 0;
+                CommissionPaid = 0;
             else
-                ComissionPaid = Convert.ToDouble(commissionPaid);
+                CommissionPaid = Convert.ToDouble(commissionPaid);
 
             if (price == "" || price == null || price == "null")
                 Price = 0;
@@ -154,7 +154,7 @@ namespace BittrexAPI.Structures
             _accountOrderList.Add(ReserveRemaining);
             _accountOrderList.Add(CommissionReserved);
             _accountOrderList.Add(CommissionReserveRemaining);
-            _accountOrderList.Add(ComissionPaid);
+            _accountOrderList.Add(CommissionPaid);
             _accountOrderList.Add(Price);
             _accountOrderList.Add(PricePerUnit);
             _accountOrderList.Add(Opened);
