@@ -62,6 +62,9 @@ namespace ConsoleApp1
 
             //APIMethods.Withdraw("GRS", 20.23222, "Address to withdraw GRS to");
 
+            AccountOrder accountOrder = APIMethods.GetOrder("uuid here");
+
+
             #endregion 
 
         }

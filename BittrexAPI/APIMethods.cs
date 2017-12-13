@@ -621,6 +621,60 @@ namespace BittrexAPI
             return response.result.uuid.ToString();
         }
 
+        /// <summary>
+        /// Used to retrieve a single order by uuid.
+        /// </summary>
+        /// <param name="uuid">The uuid of the buy or sell order</param>
+        /// <returns>The details of an specific order</returns>
+        public static AccountOrder GetOrder(string uuid)
+        {
+            string url = Constants.baseUrl + "account/getorder&uuid=" + uuid + "&nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                }
+            }
+
+            string accountId = response.result.AccountId.ToString();
+            string orderUuid = response.result.OrderUuid.ToString();
+            string exchange = response.result.Exchange.ToString();
+            string type = response.result.Type.ToString();
+            string quantity = response.result.Quantity.ToString();
+            string quantityRemaing = response.result.QuantityRemaining.ToString();
+            string limit = response.result.Limit.ToString();
+            string reserved = response.result.Reserved.ToString();
+            string reservedRemaining = response.result.ReservedRemaining.ToString();
+            string commissionReserved = response.result.ReserveRemaining.ToString();
+            string commissionReservedRemaining = response.result.CommissionReserveRemaining.ToString();
+            string commissionPaid = response.result.CommissionPaid.ToString();
+            string price = response.result.Price.ToString();
+            string pricePerUnit = response.result.PricePerUnit.ToString();
+            string opened = response.result.Opened.ToString();
+            string closed = response.result.Closed.ToString();
+            string isOpen = response.result.IsOpen.ToString();
+            string sentinel = response.result.Sentinel.ToString();
+            string cancelInitiated = response.result.CancelInitiated.ToString();
+            string immediateOrCancel = response.result.ImmediateOrCancel.ToString();
+            string isConditional = response.result.IsConditional.ToString();
+            string condiition = response.result.Condition.ToString();
+            string conditionTarget = response.result.ConditionTarget.ToString();
+
+            AccountOrder order = new AccountOrder(accountId, orderUuid, exchange, type, quantity, quantityRemaing, limit, reserved, reservedRemaining, commissionReserved,
+                commissionReservedRemaining, commissionPaid, price, pricePerUnit, opened, closed, isOpen, sentinel, cancelInitiated, immediateOrCancel, isConditional, condiition, conditionTarget);
+
+            return order;
+        }
+
+    }
+
 
 
         #endregion

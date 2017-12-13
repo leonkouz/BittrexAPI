@@ -31,7 +31,7 @@ namespace BittrexAPI.Structures
         public double ReserveRemaining { get; private set; }
         public double CommissionReserved { get; private set; }
         public double CommissionReserveRemaining { get; private set; }
-        public double ComissionPaid { get; private set; }
+        public double CommissionPaid { get; private set; }
         public double Price { get; private set; }
         public double PricePerUnit { get; private set; }
         public DateTime Opened { get; private set; }
