@@ -698,11 +698,27 @@ namespace BittrexAPI
                 }
             }
 
-            foreach(var item in response.result)
+            foreach (var item in response.result)
             {
+                string orderUuid = item.OrderUuid.ToString();
+                string exchange = item.Exchange.ToString();
+                string timeStamp = item.TimeStamp.ToString();
+                string ordertype = item.OrderType.ToString();
+                string limit = item.Limit.ToString();
+                string quantity = item.Quantity.ToString();
+                string quantityRemaining = item.QuantityRemaining.ToString();
+                string commission = item.Commission.ToString();
+                string price = item.Price.ToString();
+                string pricePerUnit = item.PricePerUnit.ToString();
+                string isConditional = item.IsConditional.ToString();
+                string condition = item.Condition.ToString();
+                string conditionTarget = item.ConditionTarget.ToString();
+                string immediateOrCancel = item.ImmediateOrCancel.ToString();
 
+                HistoryOrder order = new HistoryOrder(orderUuid, exchange, timeStamp, ordertype, limit, quantity, quantityRemaining, commission, price, pricePerUnit, isConditional, condition, conditionTarget,
+                    immediateOrCancel);
 
-
+                historyOrdersList.Add(order);
             }
 
 
