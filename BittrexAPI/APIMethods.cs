@@ -499,11 +499,11 @@ namespace BittrexAPI
         /// <summary>
         /// Used to retrieve the balance from your account for a specific currency.
         /// </summary>
-        /// <param name="market">requires a string literal for the market (ex: BTC-LTC)</param>
+        /// <param name="currency">equired	a string literal for the currency (ex: LTC)</param>
         /// <returns>The balance from your account for a specific currency</returns>
-        public static Balance GetBalance(string market)
+        public static Balance GetBalance(string currency)
         {
-            string url = Constants.baseUrl + "account/getbalance?apikey=" + Constants.ApiKey + "&currency=" + market + "&nonce=" + nonce;
+            string url = Constants.baseUrl + "account/getbalance?apikey=" + Constants.ApiKey + "&currency=" + currency + "&nonce=" + nonce;
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 

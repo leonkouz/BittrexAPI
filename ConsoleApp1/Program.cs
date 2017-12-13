@@ -58,7 +58,7 @@ namespace ConsoleApp1
 
             //List<Balance> balanceList = APIMethods.GetBalances();
 
-            Balance balance = APIMethods.GetBalance("BTC-GRS");
+            Balance balance = APIMethods.GetBalance("GRS");
 
             #endregion 
 
