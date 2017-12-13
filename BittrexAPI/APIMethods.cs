@@ -621,6 +621,8 @@ namespace BittrexAPI
             return response.result.uuid.ToString();
         }
 
+
+
         #endregion
     }
 

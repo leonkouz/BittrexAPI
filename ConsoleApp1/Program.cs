@@ -60,6 +60,8 @@ namespace ConsoleApp1
 
             Balance balance = APIMethods.GetBalance("GRS");
 
+            //APIMethods.Withdraw("GRS", 20.23222, "Address to withdraw GRS to");
+
             #endregion 
 
         }
