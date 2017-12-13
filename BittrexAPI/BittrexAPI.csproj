@@ -51,6 +51,7 @@
     <Compile Include="Structures\AccountOrder.cs" />
     <Compile Include="Structures\Balance.cs" />
     <Compile Include="Structures\Currency.cs" />
+    <Compile Include="Structures\HistoryOrder.cs" />
     <Compile Include="Structures\Market.cs" />
     <Compile Include="Structures\MarketHistory.cs" />
     <Compile Include="Structures\MarketSummary.cs" />

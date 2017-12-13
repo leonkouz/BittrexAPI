@@ -673,7 +673,67 @@ namespace BittrexAPI
             return order;
         }
 
-    }
+
+
+        /// <summary>
+        /// Used to retrieve your order history.
+        /// </summary>
+        /// <returns></returns>
+        public static List<HistoryOrder> GetOrderHistory()
+        {
+            List<HistoryOrder> historyOrdersList = new List<HistoryOrder>();
+
+            string url = Constants.baseUrl + "account/getorderhistory?apikey=" + Constants.ApiKey + "&nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                }
+            }
+
+            foreach(var item in response.result)
+            {
+
+
+
+            }
+
+
+
+        }
+
+        /// <summary>
+        /// Used to retrieve your order history for a specific market.
+        /// </summary>
+        /// <param name="market">a string literal for the market (ie. BTC-LTC).</param>
+        /// <returns></returns>
+        public static List<HistoryOrder> GetOrderHistory(string market)
+        {
+            string url = Constants.baseUrl + "account/getorderhistory?apikey=" + Constants.ApiKey + "&market=" + market + "&nonce=" + nonce;
+
+            dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
+
+            if (response.success == false)
+            {
+                if (response.success == "false")
+                {
+                    Console.WriteLine("*Unable to get balances" + "\n" +
+                        "Error: " + response.message + "\n"
+                        );
+                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                }
+            }
+
+
+
+        }
 
 
 
