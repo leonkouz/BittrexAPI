@@ -255,6 +255,9 @@ namespace BittrexAPI
                     sellList.Add(order);
                 }
 
+                //Sort by descending order
+                buyList = buyList.OrderByDescending(i => i).ToList();
+
                 OrderBook orderBook = new OrderBook(buyList, sellList);
                 return orderBook;
             }
