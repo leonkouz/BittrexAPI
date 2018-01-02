@@ -16,7 +16,7 @@ namespace ConsoleApp1
             Constants.ApiKey = "Enter api key here";
             Constants.SecretKey = "Enter Secret key here";
 
-            /*
+            
             #region PublicAPI
 
             //Get Markets test
@@ -35,13 +35,13 @@ namespace ConsoleApp1
             MarketSummary marketSummary = APIMethods.GetMarketSummary("BTC-LTC");
 
             //Gets the Order book for the specified market
-            OrderBook book = APIMethods.GetOrderBook("BTC-LTC", Order.Type.sell);
+            OrderBook book = APIMethods.GetOrderBook("BTC-LTC", Order.Type.both);
 
             List<MarketHistory> marketHistory = APIMethods.GetMarketHistory("BTC-LTC");
 
             #endregion
 
-            
+            /*
             #region MarketAPI
 
             APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
@@ -51,10 +51,10 @@ namespace ConsoleApp1
             APIMethods.CancelOrder("1231aweqweqwe123");
 
             List<OpenOrder> orders = APIMethods.GetOpenOrders("BTC-GRS");
+        
+            #endregion
 
-            #endregion*/
-
-            #region AccountAPI
+            /*#region AccountAPI
 
             List<Balance> balanceList = APIMethods.GetBalances();
 
@@ -69,7 +69,7 @@ namespace ConsoleApp1
             List<HistoryOrder> listOfSpecificOrderHistory = APIMethods.GetOrderHistory("BTC-LTC");
 
 
-            #endregion 
+            #endregion */
 
         }
     }

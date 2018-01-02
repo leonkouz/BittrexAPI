@@ -252,8 +252,11 @@ namespace BittrexAPI
                 {
                     Order order = new Order(Convert.ToDouble(item.Quantity), Convert.ToDouble(item.Rate));
 
-                    buyList.Add(order);
+                    sellList.Add(order);
                 }
+
+                //Sort by descending order
+                buyList.Reverse();
 
                 OrderBook orderBook = new OrderBook(buyList, sellList);
                 return orderBook;
