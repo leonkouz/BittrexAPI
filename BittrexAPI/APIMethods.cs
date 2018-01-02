@@ -317,13 +317,7 @@ namespace BittrexAPI
 
             if (response.success == "false")
             {
-                Console.WriteLine("*Buy limit order was UNSUCCESSFUL" + "\n" +
-                    "Error: " + response.message + "\n" +
-                    "Market: " + market + "\n" +
-                    "Quantity: " + quantity + "\n" +
-                    "Rate: " + rate
-                    );
-                return null;
+                throw new Exception("Unable to place buy limit order: " + response.message.ToString());
             }
 
             Console.WriteLine("Buy limit order placed: " + response.result.ToString());
@@ -347,13 +341,7 @@ namespace BittrexAPI
 
             if (response.success == "false")
             {
-                Console.WriteLine("*Sell limit order was UNSUCCESSFUL" + "\n" +
-                    "Error: " + response.message + "\n" +
-                    "Market: " + market + "\n" +
-                    "Quantity: " + quantity + "\n" +
-                    "Rate: " + rate
-                    );
-                return null;
+                throw new Exception("Unable to place sell limit order: " + response.message.ToString());
             }
 
             Console.WriteLine("Sell limit order placed: " + response.result.ToString());
