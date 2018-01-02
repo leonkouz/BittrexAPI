@@ -41,11 +41,11 @@ namespace ConsoleApp1
 
             #endregion
 
-            /*
+            
             #region MarketAPI
 
             APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
-
+            
             APIMethods.PlaceSellLimitOrder("BTC-LTC", 5, 0.17);
 
             APIMethods.CancelOrder("1231aweqweqwe123");
@@ -54,7 +54,7 @@ namespace ConsoleApp1
         
             #endregion
 
-            /*#region AccountAPI
+            #region AccountAPI
 
             List<Balance> balanceList = APIMethods.GetBalances();
 
@@ -69,7 +69,7 @@ namespace ConsoleApp1
             List<HistoryOrder> listOfSpecificOrderHistory = APIMethods.GetOrderHistory("BTC-LTC");
 
 
-            #endregion */
+            #endregion
 
         }
     }

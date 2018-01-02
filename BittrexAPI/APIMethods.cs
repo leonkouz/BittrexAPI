@@ -320,7 +320,7 @@ namespace BittrexAPI
 
             if (response.success == "false")
             {
-                throw new Exception("Unable to place buy limit order: " + response.message.ToString());
+                throw new ArgumentException("Unable to place buy limit order: " + response.message.ToString());
             }
 
             Console.WriteLine("Buy limit order placed: " + response.result.ToString());
@@ -344,7 +344,7 @@ namespace BittrexAPI
 
             if (response.success == "false")
             {
-                throw new Exception("Unable to place sell limit order: " + response.message.ToString());
+                throw new ArgumentException("Unable to place sell limit order: " + response.message.ToString());
             }
 
             Console.WriteLine("Sell limit order placed: " + response.result.ToString());
