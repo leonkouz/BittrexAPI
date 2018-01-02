@@ -388,9 +388,6 @@ namespace BittrexAPI
             {
                 if (response.success == "false")
                 {
-                    Console.WriteLine("*Unable to get open orders" + "\n" +
-                        "Error: " + response.message + "\n"
-                        );
                     throw new Exception("Unable to get data from API: " + response.message.ToString());
                 }
             }
@@ -457,9 +454,6 @@ namespace BittrexAPI
             {
                 if (response.success == "false")
                 {
-                    Console.WriteLine("*Unable to get balances" + "\n" +
-                        "Error: " + response.message + "\n"
-                        );
                     throw new Exception("Unable to get data from API: " + response.message.ToString());
                 }
             }
@@ -502,10 +496,7 @@ namespace BittrexAPI
             {
                 if (response.success == "false")
                 {
-                    Console.WriteLine("*Unable to get balances" + "\n" +
-                        "Error: " + response.message + "\n"
-                        );
-                    throw new Exception("Unable to get data from API: " + response.message.ToString());
+                    throw new ArgumentException("Unable to get data from API: " + response.message.ToString());
                 }
             }
 

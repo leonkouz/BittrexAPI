@@ -44,19 +44,19 @@ namespace ConsoleApp1
             
             #region MarketAPI
 
-            APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
+            //APIMethods.PlaceBuyLimitOrder("BTC-LTC", 5, 0.17);
             
-            APIMethods.PlaceSellLimitOrder("BTC-LTC", 5, 0.17);
+           // APIMethods.PlaceSellLimitOrder("BTC-LTC", 5, 0.17);
 
-            APIMethods.CancelOrder("1231aweqweqwe123");
+           // APIMethods.CancelOrder("1231aweqweqwe123");
 
-            List<OpenOrder> orders = APIMethods.GetOpenOrders("BTC-GRS");
+           // List<OpenOrder> orders = APIMethods.GetOpenOrders("BTC-GRS");
         
             #endregion
 
             #region AccountAPI
 
-            List<Balance> balanceList = APIMethods.GetBalances();
+          //  List<Balance> balanceList = APIMethods.GetBalances();
 
             Balance balance = APIMethods.GetBalance("GRS");
 
