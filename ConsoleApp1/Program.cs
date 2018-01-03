@@ -13,10 +13,10 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            Constants.ApiKey = "Enter api key here";
-            Constants.SecretKey = "Enter Secret key here";
+            Constants.ApiKey = "";
+            Constants.SecretKey = "";
 
-            
+
             #region PublicAPI
 
             //Get Markets test
@@ -48,7 +48,7 @@ namespace ConsoleApp1
             
            // APIMethods.PlaceSellLimitOrder("BTC-LTC", 5, 0.17);
 
-           // APIMethods.CancelOrder("1231aweqweqwe123");
+           APIMethods.CancelOrder("328bd88e-537e-4979-9d8b-d2e827d1a49e");
 
            // List<OpenOrder> orders = APIMethods.GetOpenOrders("BTC-GRS");
         

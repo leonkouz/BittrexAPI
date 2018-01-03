@@ -358,7 +358,7 @@ namespace BittrexAPI
         /// <param name="uuid">The uuid of the order you want to cancel</param>
         public static void CancelOrder(string uuid)
         {
-            string url = Constants.baseUrl + "market/cancel?apikey=" + Constants.ApiKey + "Y&uuid=" + uuid + "&nonce=" + nonce;
+            string url = Constants.baseUrl + "market/cancel?apikey=" + Constants.ApiKey + "&uuid=" + uuid + "&nonce=" + nonce;
 
             dynamic response = JsonConvert.DeserializeObject(HTTPMethods.HttpSignAndGet(url));
 
